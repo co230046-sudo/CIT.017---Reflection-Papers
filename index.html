@@ -22,8 +22,8 @@
     --paper-deep: #f4f0e4;
     --tape: #ddc9a0;
     --tape-deep: #cdb385;
-    --sidebar-w: 300px;
-    --font-px: 18px;
+    --sidebar-w: 336px;
+    --font-px: 20px;
   }
 
   * { box-sizing: border-box; }
@@ -66,8 +66,11 @@
 
   .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
-  body, .nav-item, .profile-toggle, .sidebar-toggle, .essay p, .rotate-prompt button, .reading-tools button, .concepts-toggle, .concepts-close, .concepts-backdrop, .deco-2 {
+  body, .nav-item, .profile-toggle, .sidebar-toggle, .essay p, .rotate-prompt button, .reading-tools button, .banner .concepts-toggle, .mobile-menu-toggle {
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='%23ddc9a0' stroke='%231e3f2b' stroke-width='1.4' stroke-linejoin='round' stroke-linecap='round'%3E%3Crect x='10' y='16' width='14' height='12' rx='5'/%3E%3Cpath d='M8,20 q-3,1 -2,4 q1,3 5,2 l1,-5 z'/%3E%3Crect x='7' y='2' width='6' height='16' rx='3' transform='rotate(-18 10 10)'/%3E%3C/g%3E%3C/svg%3E") 11 4, auto;
+  }
+  .nav-item:active, .profile-toggle:active, .sidebar-toggle:active, .essay p:active, .rotate-prompt button:active, .reading-tools button:active, .banner .concepts-toggle:active, .mobile-menu-toggle:active, body:active {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='%23ddc9a0' stroke='%231e3f2b' stroke-width='1.4' stroke-linejoin='round' stroke-linecap='round'%3E%3Crect x='10' y='16' width='14' height='12' rx='5'/%3E%3Cpath d='M8,20 q-3,1 -2,4 q1,3 5,2 l1,-5 z'/%3E%3Crect x='7' y='7' width='6' height='11' rx='3' transform='rotate(38 10 12)'/%3E%3C/g%3E%3C/svg%3E") 11 4, auto;
   }
 
   /* ---------- Reading progress ---------- */
@@ -86,7 +89,7 @@
     font-size: 0.92rem; font-weight: 700; letter-spacing: 0.01em;
     padding: 0.75rem 1.1rem; border-radius: 14px;
     border: 1px solid rgba(255,255,255,0.6);
-    max-width: 190px; text-align: left; line-height: 1.35;
+    max-width: 250px; text-align: left; line-height: 1.35;
     opacity: 0; transform: translateY(-50%) translateX(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease, left 0.3s ease;
     pointer-events: none;
@@ -117,13 +120,18 @@
     position: fixed;
     width: 520px; height: 520px; right: -120px; top: -80px;
     z-index: 3;
-    color: var(--forest); opacity: 0.11;
+    color: var(--forest); opacity: 0.13;
     pointer-events: auto;
-    transition: color 0.35s ease, opacity 0.35s ease;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='%23ddc9a0' stroke='%231e3f2b' stroke-width='1.4' stroke-linejoin='round' stroke-linecap='round'%3E%3Crect x='10' y='16' width='14' height='12' rx='5'/%3E%3Cpath d='M8,20 q-3,1 -2,4 q1,3 5,2 l1,-5 z'/%3E%3Crect x='7' y='2' width='6' height='16' rx='3' transform='rotate(-18 10 10)'/%3E%3C/g%3E%3C/svg%3E") 11 4, auto;
+    transition: opacity 0.35s ease;
   }
-  .deco-2:hover { color: #6fbf47; opacity: 0.5; filter: url(#shieldDistort); }
+  .deco-2:hover { opacity: 0.55; filter: url(#shieldDistort); }
+  .shield-wrap { transform-box: fill-box; transform-origin: center; transition: transform 0.35s ease; }
+  .deco-2:hover .shield-wrap { transform: rotate(-6deg) scale(1.05); }
   .deco-2 .shield-label { opacity: 0; font-size: 26px; font-weight: 700; letter-spacing: 4px; fill: currentColor; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; transition: opacity 0.25s ease; }
   .deco-2:hover .shield-label { opacity: 1; }
+  .shield-ring { animation: ringPulse 4s ease-in-out infinite; }
+  @keyframes ringPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.85; } }
 
   .deco-ripple { transform-box: fill-box; transform-origin: center; animation: ripple 4.5s ease-out infinite; }
   .deco-ripple:nth-child(2) { animation-delay: -1.5s; }
@@ -171,6 +179,13 @@
   .brand-mark { width: 36px; height: 36px; flex-shrink: 0; }
   .brand .code { font-size: 1.25rem; font-style: italic; color: var(--forest-deep); line-height: 1.15; }
   .brand .sub { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--avocado-deep); margin-top: 0.3rem; }
+
+  .mobile-menu-toggle {
+    display: none;
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--mint-deep); border: 1px solid var(--celadon-deep); color: var(--forest-deep);
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
 
   .nav-label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--avocado-deep); margin: 0 0 1.1rem 0.2rem; }
   .nav-label svg { width: 13px; height: 13px; flex-shrink: 0; }
@@ -259,7 +274,7 @@
     transition: background 0.18s ease, transform 0.18s ease;
   }
   .reading-tools button:hover { background: #ffffff; transform: translateY(-1px); }
-  .font-size-value { font-size: 0.72rem; font-weight: 700; color: var(--avocado-deep); min-width: 30px; text-align: center; }
+  .font-size-value { font-size: 0.72rem; font-weight: 700; color: var(--avocado-deep); min-width: 34px; text-align: center; }
   #darkToggle { font-size: 0.95rem; }
 
   /* ---------- Dark mode (manual toggle only) ---------- */
@@ -268,7 +283,7 @@
     background-image: linear-gradient(180deg, #14261c, #1b3327), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='2' cy='2' r='1.1' fill='%23bfe0c9' opacity='0.1'/%3E%3C/svg%3E");
     color: #e8f2ea; border-right-color: #2a4534;
   }
-  html.dark-mode .sidebar-toggle, html.dark-mode .reading-tools button { background: #1b3327; border-color: #2a4534; color: #e8f2ea; }
+  html.dark-mode .sidebar-toggle, html.dark-mode .reading-tools button, html.dark-mode .mobile-menu-toggle { background: #1b3327; border-color: #2a4534; color: #e8f2ea; }
   html.dark-mode .sidebar-toggle:hover, html.dark-mode .reading-tools button:hover { background: #223d2e; }
   html.dark-mode .nav-item { background: #1b3327; border-color: #2a4534; }
   html.dark-mode .nav-item:hover { background: #223d2e; }
@@ -282,21 +297,16 @@
   html.dark-mode .paper, html.dark-mode .paper-texture { background-color: #16211a; border-color: #2a4534; box-shadow: 0 20px 45px rgba(0,0,0,0.4); }
   html.dark-mode .essay p { color: #e2ece4; text-decoration-color: rgba(180,200,180,0.28); }
   html.dark-mode .essay p:first-of-type::first-letter { color: #8fd1a8; }
-  html.dark-mode .signature, html.dark-mode .refs { color: #a9c2af; }
+  html.dark-mode .signature { color: #a9c2af; }
   html.dark-mode .ornament { color: #7fa860; }
   html.dark-mode .ornament::before, html.dark-mode .ornament::after { background: #2a4534; }
   html.dark-mode .easter-egg p { color: #9dc47e; }
   html.dark-mode .highlight-hint { color: #8fc79f; }
-  html.dark-mode .concepts-toggle { background: #1b3327; border-color: #2a4534; color: #eef6f0; }
-  html.dark-mode .concepts-toggle:hover { background: #223d2e; }
-  html.dark-mode .concepts-popup { background: #16211a; border-color: #2a4534; }
-  html.dark-mode .concepts-popup h3 { color: #eef6f0; }
-  html.dark-mode .concepts-popup p { color: #a9c2af; }
-  html.dark-mode .reading-tag { background: linear-gradient(135deg, rgba(30,50,40,0.55), rgba(30,50,40,0.25)); color: #eef6f0; border-color: rgba(255,255,255,0.18); }
+  html.dark-mode .essay p.marked { border-left-color: #8fd1a8; }
 
   /* ================= Main ================= */
   .main { position: relative; z-index: 1; margin-left: var(--sidebar-w); padding: 3rem 2.75rem 5.5rem 3.25rem; transition: margin-left 0.3s ease; }
-  .frame { max-width: 840px; margin: 0 auto; }
+  .frame { max-width: calc(840px + (var(--font-px, 20px) - 20px) * 18); margin: 0 auto; transition: max-width 0.2s ease; }
 
   .crumb { font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 1.25rem; }
   .crumb strong { color: var(--forest); }
@@ -313,12 +323,16 @@
     isolation: isolate;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .banner.reveal { animation: riseIn 0.7s ease both; }
+  .banner.reveal { animation: riseIn 0.6s cubic-bezier(.2,.7,.3,1) both; }
+  .bg-deco.reveal, .deco2-wrap.reveal { animation: riseIn 0.6s cubic-bezier(.2,.7,.3,1) both; }
+  .deco2-wrap { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+  .sidebar.reveal { animation: sidebarFadeIn 0.6s ease both; }
+  @keyframes sidebarFadeIn { from { opacity: 0; } to { opacity: 1; } }
   .banner:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(30,63,43,0.22); }
 
-  .banner .art { position: absolute; right: -10px; top: -10px; width: 320px; height: 320px; z-index: 0; pointer-events: none; opacity: 0.55; animation: drift 20s ease-in-out infinite; }
+  .banner .art { position: absolute; right: 6px; top: 10px; width: 300px; height: 300px; z-index: 0; pointer-events: none; opacity: 0.55; animation: drift 20s ease-in-out infinite; }
   @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(1.5deg) scale(1.01); } }
-  @keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes riseIn { from { opacity: 0; transform: scale(1.09); } to { opacity: 1; transform: scale(1); } }
 
   .lock-pulse { transform-box: fill-box; transform-origin: center; animation: lockPulse 3.6s ease-in-out infinite; }
   @keyframes lockPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
@@ -331,6 +345,35 @@
   .banner .byline .name { font-weight: 700; color: #fffef9; }
   .banner .byline .dot { margin: 0 0.35em; opacity: 0.7; }
 
+  .banner .concepts-toggle {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1.5rem; padding: 0.5rem 1rem;
+    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.32); border-radius: 999px;
+    color: #fbfaf3; font-size: 0.8rem; font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: background 0.18s ease;
+  }
+  .banner .concepts-toggle:hover { background: rgba(255,255,255,0.26); }
+  .banner .concepts-toggle .chev { transition: transform 0.25s ease; }
+  .banner .concepts-toggle.open .chev { transform: rotate(90deg); }
+  .banner .concepts-panel {
+    max-height: 0; overflow: hidden; opacity: 0;
+    transform: scale(0.8) rotate(-3deg);
+    transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.3s ease, transform 0.4s cubic-bezier(.34,1.56,.64,1), padding 0.3s ease;
+    margin-top: 0;
+    background: var(--paper);
+    border-radius: 12px;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+  }
+  .banner .concepts-panel.open { max-height: 260px; opacity: 1; margin-top: 0.9rem; transform: scale(1) rotate(0deg); padding: 1.1rem 1.3rem; }
+  .concepts-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+  .concepts-list li {
+    position: relative; padding-left: 1.35rem;
+    font-size: 0.86rem; font-style: normal; color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+  .concepts-list li::before { content: "❖"; position: absolute; left: 0; top: 0.05em; color: var(--avocado); font-size: 0.78rem; }
+
   /* ---------- Paper ---------- */
   .paper {
     position: relative;
@@ -340,7 +383,7 @@
     padding: 4rem 4rem 3.5rem;
     transition: box-shadow 0.25s ease;
   }
-  .paper.reveal { animation: riseIn 0.7s ease 0.15s both; }
+  .paper.reveal { animation: riseIn 0.6s cubic-bezier(.2,.7,.3,1) 0.1s both; }
   .paper:hover { box-shadow: 0 26px 55px rgba(30,63,43,0.15), inset 0 0 60px rgba(90,70,40,0.05); }
 
   .paper::before {
@@ -363,51 +406,19 @@
     z-index: 2;
   }
 
-  .ornament { display: flex; align-items: center; gap: 0.9rem; margin: 0 0 2.5rem; color: var(--avocado); }
+  .ornament { display: flex; align-items: center; gap: 0.9rem; margin: 0 0 1.5rem; color: var(--avocado); }
   .ornament::before, .ornament::after { content: ""; flex: 1; height: 1px; background: var(--line); }
   .ornament span { font-size: 1.2rem; }
 
-  .concepts-toggle {
-    display: flex; align-items: center; gap: 0.5rem;
-    margin: 0 auto 1.75rem; padding: 0.55rem 1.1rem;
-    background: var(--mint-deep); border: 1px solid var(--celadon-deep); border-radius: 999px;
-    color: var(--forest-deep); font-size: 0.82rem; font-weight: 600;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    transition: background 0.18s ease;
-  }
-  .concepts-toggle:hover { background: #ffffff; }
-
-  .concepts-backdrop {
-    position: fixed; inset: 0; z-index: 90;
-    background: rgba(15,26,20,0.4);
-    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.28s ease;
-  }
-  .concepts-backdrop.open { opacity: 1; pointer-events: auto; }
-
-  .concepts-popup {
-    position: fixed; top: 50%; left: 50%; z-index: 91;
-    width: 90%; max-width: 480px;
-    background: var(--paper); border: 1px solid var(--line); border-radius: 18px;
-    padding: 2.1rem 2.3rem;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 12px 30px rgba(0,0,0,0.22);
-    perspective: 900px;
-    transform: translate(-50%, -50%) scale(0.82) rotateX(10deg);
-    opacity: 0; pointer-events: none;
-    transition: transform 0.35s cubic-bezier(.22,1.1,.36,1), opacity 0.25s ease;
-  }
-  .concepts-popup.open { transform: translate(-50%, -50%) scale(1) rotateX(0deg); opacity: 1; pointer-events: auto; }
-  .concepts-popup h3 { margin: 0 0 0.9rem; font-size: 1.15rem; color: var(--forest-deep); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-  .concepts-popup p { font-size: 1.02rem; font-style: italic; color: var(--ink-soft); margin: 0; line-height: 1.6; }
-  .concepts-close {
-    position: absolute; top: 0.8rem; right: 1rem;
-    background: none; border: none; font-size: 1.4rem; line-height: 1; color: var(--avocado-deep);
+  .highlight-hint {
+    text-align: center; font-size: 0.85rem; font-style: italic; color: var(--avocado-deep);
+    margin: 0 0 1.75rem;
+    transition: opacity 0.6s ease;
   }
 
   .essay p {
     position: relative;
-    font-size: var(--font-px, 18px);
+    font-size: var(--font-px, 20px);
     line-height: 1.95;
     margin: 0 0 3rem;
     color: var(--ink);
@@ -419,24 +430,18 @@
     text-underline-offset: 8px;
     opacity: 0;
     transform: translateY(14px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.2s ease;
   }
   .essay p:not(:first-of-type) { text-indent: 2em; }
   .essay p.in-view { opacity: 1; transform: none; }
 
   .essay p.marked {
-    background-image:
-      linear-gradient(95deg, rgba(159,199,140,0.06), rgba(159,199,140,0.45) 12%, rgba(159,199,140,0.5) 88%, rgba(159,199,140,0.06)),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.55 0 0 0 0 0.65 0 0 0 0 0.4 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
-    background-blend-mode: multiply;
+    border-left: 3px solid var(--forest);
+    padding-left: 1rem;
+    margin-left: -1rem;
   }
 
-  .highlight-hint {
-    text-align: center; font-size: 0.85rem; font-style: italic; color: var(--avocado-deep);
-    margin: 0 0 1.75rem;
-  }
-
-  .essay p:first-of-type::first-letter { font-size: calc(var(--font-px, 18px) * 3.1); font-weight: 600; float: left; line-height: 0.8; padding: 0.06em 0.1em 0 0; color: var(--forest); }
+  .essay p:first-of-type::first-letter { font-size: calc(var(--font-px, 20px) * 3.1); font-weight: 600; float: left; line-height: 0.8; padding: 0.06em 0.1em 0 0; color: var(--forest); }
 
   .signature { margin-top: 2.75rem; padding-top: 1.9rem; border-top: 1px solid var(--line); font-size: 1.02rem; font-style: italic; color: var(--ink-soft); text-align: right; }
 
@@ -472,21 +477,90 @@
     opacity: 0;
     pointer-events: none;
     background: linear-gradient(135deg, var(--avocado), var(--forest-deep));
-    animation: flashIn 0.5s ease 2.75s forwards, flashOut 0.55s ease 3.25s forwards;
+    animation: flashIn 0.08s linear 3.4s forwards, flashOut 0.4s ease 3.95s forwards;
   }
   @keyframes flashIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes flashOut { from { opacity: 1; } to { opacity: 0; } }
+
+  .flash-tagline {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    color: #fbfaf3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    animation: taglineFade 0.45s ease 3.48s forwards;
+  }
+  @keyframes taglineFade {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    35% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    75% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.03); }
+  }
 
   .notebook {
     position: relative;
     width: 260px;
     height: 340px;
+    perspective: 1100px;
     will-change: transform, opacity;
-    animation: zoomIn 0.9s ease 2.2s forwards;
+    animation: zoomIn 0.65s cubic-bezier(.55,0,1,.45) 2.9s forwards;
   }
   @keyframes zoomIn {
     from { transform: scale(1); opacity: 1; }
-    to { transform: scale(3.6); opacity: 0.5; }
+    to { transform: scale(3.6); opacity: 0.94; }
+  }
+
+  .notebook-page {
+    position: absolute;
+    inset: 0;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .doodle-sidebar { position: absolute; left: 0; top: 0; bottom: 0; width: 24%; background: var(--celadon); }
+  .doodle-banner { position: absolute; left: 32%; right: 10%; top: 10%; height: 24%; background: var(--avocado); border-radius: 4px; }
+  .doodle-line { position: absolute; left: 32%; height: 4px; background: var(--line); border-radius: 2px; }
+
+  .page-flip {
+    position: absolute; inset: 0;
+    transform-style: preserve-3d;
+    transform-origin: 0% 50%;
+  }
+  .page-flip .page-face {
+    position: absolute; inset: 0;
+    background-color: var(--paper);
+    background-image: repeating-linear-gradient(to bottom, transparent 0 17px, rgba(90,110,90,0.14) 17px 18px);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .page-flip-1 { animation: pageFlip 0.35s ease 2.1s forwards; }
+  .page-flip-2 { animation: pageFlip 0.35s ease 2.3s forwards; }
+  .page-flip-3 { animation: pageFlip 0.35s ease 2.5s forwards; }
+  @keyframes pageFlip { from { transform: rotateY(0deg); } to { transform: rotateY(-175deg); } }
+
+  .cover-flip {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transform-origin: 0% 50%;
+    animation: coverOpen 0.55s ease 1.6s forwards;
+  }
+  @keyframes coverOpen {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(-178deg); }
+  }
+  .cover-back {
+    position: absolute; inset: 0;
+    background: var(--forest-deep);
+    border-radius: 16px;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   .notebook .rings {
@@ -500,30 +574,23 @@
     background-repeat: repeat-y;
   }
 
-  .notebook svg.cover { display: block; width: 100%; height: 100%; overflow: visible; }
+  .notebook svg.cover { display: block; width: 100%; height: 100%; overflow: visible; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 
   .notebook .underline {
     stroke: #fbfaf3;
     stroke-width: 3;
     stroke-linecap: round;
     fill: none;
-    stroke-dasharray: 220;
-    stroke-dashoffset: 220;
-    animation: writeLine 0.7s ease 0.35s forwards;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: writeLine 0.7s linear 0.35s forwards;
   }
   @keyframes writeLine { to { stroke-dashoffset: 0; } }
 
-  .notebook .pen {
-    transform: translate(220px, 145px) rotate(-28deg);
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: penWiggle 0.35s ease-in-out 0.35s 3 alternate, penFade 0.4s ease 1s forwards;
-  }
-  @keyframes penWiggle {
-    from { transform: translate(220px, 145px) rotate(-28deg); }
-    to { transform: translate(228px, 148px) rotate(-25deg); }
-  }
+  .notebook .pen { animation: penFade 0.4s ease 1.15s forwards; }
   @keyframes penFade { to { opacity: 0; } }
+  .pen-bob { animation: penBob 0.16s ease-in-out 0.35s infinite alternate; transform-box: fill-box; transform-origin: center; }
+  @keyframes penBob { from { transform: translateY(-1.4px); } to { transform: translateY(1.4px); } }
 
   .intro-hint {
     position: fixed;
@@ -569,11 +636,16 @@
     .sidebar-toggle { display: none; }
     .reading-tag { top: 56px; left: 10px; font-size: 0.8rem; transform: translateX(-10px); }
     .reading-tag.show { transform: none; }
-    .deco-1, .deco-2 { opacity: 0.06; }
-    .sidebar { position: static; width: 100%; flex-direction: row; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-right: none; border-bottom: 1px solid var(--celadon-deep); }
-    .brand { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-    .nav-label, .nav-list, .sidebar-footer { display: none; }
+    .deco-2 { display: none; }
+    .deco-1 { opacity: 0.06; }
+    .sidebar { position: static; width: 100%; flex-direction: row; align-items: flex-start; justify-content: space-between; padding: 1rem 1.25rem; border-right: none; border-bottom: 1px solid var(--celadon-deep); flex-wrap: wrap; }
+    .brand { margin-bottom: 0; padding-bottom: 0; border-bottom: none; flex: 1; }
+    .mobile-menu-toggle { display: flex; }
+    .nav-label, .nav-list, .sidebar-footer { display: none; width: 100%; }
+    html.mobile-nav-open .nav-label, html.mobile-nav-open .nav-list, html.mobile-nav-open .sidebar-footer { display: block; margin-top: 1.25rem; }
+    html.mobile-nav-open .nav-list { display: flex; }
     .main { margin-left: 0 !important; padding: 1.75rem 1.1rem 3.5rem; }
+    .frame { max-width: 100% !important; }
     .banner { padding: 2.5rem 1.6rem; }
     .banner h1 { font-size: 1.85rem; }
     .banner .art { width: 220px; height: 220px; right: -30px; top: -30px; }
@@ -586,7 +658,6 @@
     .banner { padding: 2rem 1.2rem; }
     .paper { padding: 1.75rem 1.2rem 1.75rem; }
     .essay p:first-of-type::first-letter { font-size: 3rem; }
-    .refs { font-size: 0.88rem; }
   }
 </style>
 </head>
@@ -606,6 +677,17 @@
   <div class="intro-overlay" id="intro">
     <div class="notebook">
       <div class="rings"></div>
+      <div class="notebook-page">
+        <div class="doodle-sidebar"></div>
+        <div class="doodle-banner"></div>
+        <div class="doodle-line" style="top:42%; width:56%;"></div>
+        <div class="doodle-line" style="top:50%; width:44%;"></div>
+        <div class="doodle-line" style="top:58%; width:50%;"></div>
+      </div>
+      <div class="page-flip page-flip-3"><div class="page-face"></div></div>
+      <div class="page-flip page-flip-2"><div class="page-face"></div></div>
+      <div class="page-flip page-flip-1"><div class="page-face"></div></div>
+      <div class="cover-flip">
       <svg class="cover" viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="coverGrain"><feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/></filter>
@@ -620,12 +702,17 @@
         <rect x="26" y="22" width="66" height="20" fill="url(#tape)" opacity="0.85" transform="rotate(-9 59 32)"/>
 
         <text x="130" y="128" text-anchor="middle" font-family="'Segoe Script','Bradley Hand','Brush Script MT',cursive" font-size="30" fill="#fbfaf3">CIT.017</text>
-        <path class="underline" d="M42,140 Q90,150 130,140 T218,140"/>
+        <path class="underline" pathLength="1" d="M42,142 Q130,150 218,142"/>
         <text x="130" y="168" text-anchor="middle" font-family="-apple-system,'Segoe UI',sans-serif" font-size="12" letter-spacing="3" fill="#e3f0e6">REFLECTION PAPERS</text>
         <g class="pen">
-          <rect x="-64" y="-4" width="64" height="8" rx="4" fill="#f4f1e6" stroke="var(--forest-deep)" stroke-width="1.6"/>
-          <rect x="-13" y="-4" width="13" height="8" rx="4" fill="var(--forest-deep)"/>
-          <path d="M-64,-4 L-76,0 L-64,4 Z" fill="#e9e4d2" stroke="var(--forest-deep)" stroke-width="1.4"/>
+          <animateMotion dur="0.7s" begin="0.35s" fill="freeze" rotate="auto" path="M42,142 Q130,150 218,142"/>
+          <g transform="rotate(-42)">
+            <g class="pen-bob">
+              <rect x="0" y="-4" width="64" height="8" rx="4" fill="#f4f1e6" stroke="var(--forest-deep)" stroke-width="1.6"/>
+              <rect x="0" y="-4" width="13" height="8" rx="4" fill="var(--forest-deep)"/>
+              <path d="M64,-4 L76,0 L64,4 Z" fill="#e9e4d2" stroke="var(--forest-deep)" stroke-width="1.4"/>
+            </g>
+          </g>
         </g>
 
         <g transform="translate(64,252) rotate(8)">
@@ -642,10 +729,12 @@
 
         <text x="130" y="312" text-anchor="middle" font-family="-apple-system,'Segoe UI',sans-serif" font-size="10.5" letter-spacing="2" fill="#e3f0e6">DAVID DE JESUS</text>
       </svg>
+      <div class="cover-back"></div>
+      </div>
     </div>
     <div class="intro-hint">click anywhere to open</div>
   </div>
-  <div class="flash" id="flash"></div>
+  <div class="flash" id="flash"><div class="flash-tagline">Information Security</div></div>
   <script>
     (function () {
       var intro = document.getElementById('intro');
@@ -670,8 +759,8 @@
         document.documentElement.classList.remove('intro-active');
         sessionStorage.setItem('cit017IntroSeen', '1');
       }
-      timers.push(setTimeout(function () { if (!done) intro.style.display = 'none'; }, 3250));
-      timers.push(setTimeout(cleanup, 3900));
+      timers.push(setTimeout(function () { if (!done) intro.style.display = 'none'; }, 3550));
+      timers.push(setTimeout(cleanup, 4450));
       intro.addEventListener('click', function () { setTimeout(cleanup, 40); });
     })();
   </script>
@@ -691,6 +780,7 @@
       </g>
     </svg>
   </div>
+  <div class="deco2-wrap">
   <svg class="deco deco-2" id="deco2" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <filter id="shieldDistort" x="-30%" y="-30%" width="160%" height="160%">
@@ -701,14 +791,19 @@
       </filter>
     </defs>
     <g transform="translate(250,260)">
-      <circle class="deco-ripple" r="95" stroke="currentColor" stroke-width="2"/>
-      <circle class="deco-ripple" r="95" stroke="currentColor" stroke-width="2"/>
-      <circle class="deco-ripple" r="95" stroke="currentColor" stroke-width="2"/>
-      <path d="M0,-135 L112,-98 V18 C112,86 62,124 0,150 C-62,124 -112,86 -112,18 V-98 Z" stroke="currentColor" stroke-width="3"/>
-      <path d="M-24,10 L-6,30 L30,-18" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-      <text class="shield-label" x="0" y="90" text-anchor="middle">PROTECTED</text>
+      <g class="shield-wrap">
+        <g class="shield-ring">
+          <circle class="deco-ripple" r="95" stroke="currentColor" stroke-width="2"/>
+          <circle class="deco-ripple" r="95" stroke="currentColor" stroke-width="2"/>
+          <circle class="deco-ripple" r="95" stroke="currentColor" stroke-width="2"/>
+        </g>
+        <path d="M0,-135 L112,-98 V18 C112,86 62,124 0,150 C-62,124 -112,86 -112,18 V-98 Z" stroke="currentColor" stroke-width="3"/>
+        <path d="M-24,10 L-6,30 L30,-18" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text class="shield-label" x="0" y="90" text-anchor="middle">PROTECTED</text>
+      </g>
     </g>
   </svg>
+  </div>
 
   <aside class="sidebar">
     <div class="brand">
@@ -722,6 +817,9 @@
         <div class="sub">Reflection Papers</div>
       </div>
     </div>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" type="button">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
 
     <div class="nav-label sans">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12 L15 5 a3 3 0 0 1 4 4 L11 17 a5 5 0 0 1 -7 -7 L12 2"/></svg>
@@ -746,10 +844,10 @@
         <div class="role">4th Year BSIT Student</div>
       </button>
       <div class="profile-blurb" id="profileBlurb">Ewan ko bakit ko to nilagay, na bored lang siguro ako HAHAHA.</div>
-      <div class="reading-tools-label sans">Text size (14–20px)</div>
+      <div class="reading-tools-label sans">Text size (16–24px)</div>
       <div class="reading-tools">
         <button type="button" id="fontDec" aria-label="Decrease text size">A−</button>
-        <span class="font-size-value sans" id="fontSizeValue">18px</span>
+        <span class="font-size-value sans" id="fontSizeValue">20px</span>
         <button type="button" id="fontInc" aria-label="Increase text size">A+</button>
         <button type="button" id="darkToggle" aria-label="Toggle dark mode">🌙</button>
       </div>
@@ -762,21 +860,21 @@
 
       <div class="banner">
         <svg class="art" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <g fill="none" stroke="#fbfaf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.45">
-            <circle cx="290" cy="160" r="78"/>
-            <path d="M212,160 H166"/>
-            <circle cx="160" cy="160" r="5" fill="#fbfaf3"/>
-            <path d="M290,82 V46 H320"/>
-            <circle cx="324" cy="46" r="5" fill="#fbfaf3"/>
-            <path d="M340,160 H384"/>
-            <circle cx="388" cy="160" r="5" fill="#fbfaf3"/>
-          </g>
-          <circle r="4" fill="#e3f0e6"><animateMotion dur="3s" repeatCount="indefinite" path="M212,160 H166"/></circle>
-          <circle r="4" fill="#e3f0e6"><animateMotion dur="3.4s" repeatCount="indefinite" path="M290,82 V46 H320"/></circle>
-          <circle r="4" fill="#e3f0e6"><animateMotion dur="2.8s" repeatCount="indefinite" path="M340,160 H384"/></circle>
-          <g transform="translate(290,160)">
+          <g transform="translate(250,190)">
+            <g fill="none" stroke="#fbfaf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.48">
+              <path d="M-20,-4 V-24 H-42"/><rect x="-50" y="-27" width="8" height="6" rx="1.5" fill="#fbfaf3"/>
+              <path d="M0,-4 V-32"/><rect x="-4" y="-38" width="8" height="6" rx="1.5" fill="#fbfaf3"/>
+              <path d="M20,-4 V-24 H42"/><rect x="42" y="-27" width="8" height="6" rx="1.5" fill="#fbfaf3"/>
+              <path d="M-34,15 H-58"/><rect x="-66" y="12" width="8" height="6" rx="1.5" fill="#fbfaf3"/>
+              <path d="M34,15 H58"/><rect x="58" y="12" width="8" height="6" rx="1.5" fill="#fbfaf3"/>
+              <path d="M-20,56 V78 H-42"/><rect x="-50" y="78" width="8" height="6" rx="1.5" fill="#fbfaf3"/>
+              <path d="M20,56 V78 H42"/><rect x="42" y="78" width="8" height="6" rx="1.5" fill="#fbfaf3"/>
+            </g>
+            <circle r="3.4" fill="#e3f0e6"><animateMotion dur="2.2s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;0" keyTimes="0;0.5;1" path="M0,-4 V-32"/></circle>
+            <circle r="3.4" fill="#e3f0e6"><animateMotion dur="2.2s" begin="0.5s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;0" keyTimes="0;0.5;1" path="M-34,15 H-58"/></circle>
+            <circle r="3.4" fill="#e3f0e6"><animateMotion dur="2.2s" begin="1s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;0" keyTimes="0;0.5;1" path="M34,15 H58"/></circle>
             <g class="lock-pulse">
-              <rect x="-34" y="-4" width="68" height="60" rx="12" fill="#fbfaf3" stroke="#1e3f2b" stroke-width="2.8"/>
+              <rect x="-34" y="-4" width="68" height="60" rx="10" fill="#fbfaf3" stroke="#1e3f2b" stroke-width="2.8"/>
               <path d="M-18,-4 v-20 a18,18 0 0 1 36,0 v20" fill="none" stroke="#1e3f2b" stroke-width="3"/>
               <circle cy="22" r="6.5" fill="#1e3f2b"/>
               <path d="M0,27 v10" stroke="#1e3f2b" stroke-width="3.6" stroke-linecap="round"/>
@@ -787,22 +885,29 @@
           <span class="kicker">Reflection Paper 1 · Information Security</span>
           <h1>Security in Depth: Uncovering the Layers of System Protection</h1>
           <div class="byline"><span class="name">David John J. De Jesus</span> · 4th Year BSIT · August 2026<span class="dot">·</span>3 min read</div>
-        </div>
-      </div>
 
-      <button class="concepts-toggle sans" id="conceptsToggle" type="button" style="display:flex; margin-left:auto; margin-right:auto;">
-        <span>Concepts referenced</span> <span class="chev">›</span>
-      </button>
-      <div class="concepts-backdrop" id="conceptsBackdrop"></div>
-      <div class="concepts-popup sans" id="conceptsPopup">
-        <button class="concepts-close" id="conceptsClose" type="button" aria-label="Close">×</button>
-        <h3>Concepts Referenced</h3>
-        <p>the McCumber Cube · Authentication, Authorization &amp; Accounting · the CIA Triad · Security by Design</p>
+          <button class="concepts-toggle" id="conceptsToggle" type="button">
+            <span>Concepts referenced</span> <span class="chev">›</span>
+          </button>
+          <div class="concepts-panel" id="conceptsPanel">
+            <ul class="concepts-list">
+              <li>The McCumber Cube</li>
+              <li>Authentication, Authorization &amp; Accounting</li>
+              <li>The CIA Triad</li>
+              <li>Principles of Security</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <article class="paper paper-texture">
         <div class="ornament"><span>❖</span></div>
-        <p class="highlight-hint sans">💡 Tip: click any paragraph to highlight it</p>
+        <p class="highlight-hint sans" id="highlightHint" style="display:none">💡 Tip: click any paragraph to highlight it</p>
+        <script>
+          if (!localStorage.getItem('cit017TipSeen')) {
+            document.getElementById('highlightHint').style.display = '';
+          }
+        </script>
 
         <div class="essay">
           <p data-topic="Introduction">Coming into this lesson I thought I already had a decent grasp on information security. As an IT student I always assumed security simply meant writing bug-free code to keep a system running. However delving into these core frameworks made me realize that security is rarely about the system itself, it is fundamentally about protecting the users and their data. Security is never a simple black and white subject. It is a deeply layered discipline and analyzing these models completely reshaped how I view my role as a future developer.</p>
@@ -811,14 +916,14 @@
 
           <p data-topic="Authentication, Authorization &amp; Accounting">When it comes to the Foundations of Security the Authentication, Authorization, and Accounting framework was the most helpful for my learning. I did not realize before that authentication and authorization had completely different goals. Learning about authentication gave me more insight because I learned that proving identity goes beyond simple password fields to include things like biometrics or OTPs. This directly reinforced how I build login pages and how I should treat users on a website. Concepts like Prevention, Detection, and Mitigation were also eye-opening. I used to focus almost entirely on prevention when building projects, but learning about detection and mitigation made me realize I had no plan for what happens when a system inevitably gets compromised. The lessons also deepened my understanding of integrity and availability in real life scenarios beyond just their definitions. A good example I realized is that integrity means keeping an accurate bank balance while availability means ensuring critical systems stay working in tough situations like accessing medical records in hospitals.</p>
 
-          <p data-topic="Security by Design">The security principles were very insightful especially Separation of Duty, Security by Design, and the Principle of Complete Mediation. These three really opened my eyes to how we can make a system more secure. I used to think securing a system was mostly about writing technical code but now I see it is really about how you scope and design the architecture from the start. Principles are the foundation beneath any technical coding implementation. The scenario about the municipal payroll and its lack of auditing and clear roles highlighted these principles perfectly. It demonstrated real life vulnerabilities caused by weak design which will help me scope and implement security much better in my Capstone and future projects.</p>
+          <p data-topic="Principles of Security">The security principles were very insightful especially Separation of Duty, Security by Design, and the Principle of Complete Mediation. These three really opened my eyes to how we can make a system more secure. I used to think securing a system was mostly about writing technical code but now I see it is really about how you scope and design the architecture from the start. Principles are the foundation beneath any technical coding implementation. The scenario about the municipal payroll and its lack of auditing and clear roles highlighted these principles perfectly. It demonstrated real life vulnerabilities caused by weak design which will help me scope and implement security much better in my Capstone and future projects.</p>
         </div>
 
         <p class="signature">— D.J. De Jesus</p>
 
         <div class="easter-egg" id="easterEgg">
           <span class="egg-emoji">🎉</span>
-          <p>Still scrolling? Thanks for actually reading it all. Full transparency: every idea, decision, and creative direction here is mine — AI played a real part in helping implement, refine, and polish the code that brings it all to life.</p>
+          <p>Still scrolling? Thanks for actually reading it all. Full transparency: every idea, decision, and creative direction here is mine — AI did play a real part in helping implement, refine, and polish the code that brings all this page to life.</p>
         </div>
       </article>
     </div>
@@ -839,7 +944,7 @@
         var pct = scrollable > 0 ? (scrollY / scrollable) * 100 : 0;
         bar.style.width = pct + '%';
         if (deco1) deco1.style.transform = 'translateY(' + (-scrollY * 0.12) + 'px)';
-        if (deco2) deco2.style.transform = 'translateY(' + (scrollY * 0.09) + 'px) rotate(' + (scrollY * 0.012) + 'deg)';
+        if (deco2) deco2.style.transform = 'translateY(' + (scrollY * 0.08) + 'px) rotate(' + (scrollY * 0.012) + 'deg)';
 
         var refY = window.innerHeight * 0.35;
         var current = null;
@@ -885,11 +990,17 @@
         var introPlaying = !sessionStorage.getItem('cit017IntroSeen') && !reduceMotion;
         var bannerEl = document.querySelector('.banner');
         var paperEl = document.querySelector('.paper');
+        var sidebarEl = document.querySelector('.sidebar');
+        var bgDecoEl = document.querySelector('.bg-deco');
+        var deco2WrapEl = document.querySelector('.deco2-wrap');
         function revealContent() {
           if (bannerEl) bannerEl.classList.add('reveal');
           if (paperEl) paperEl.classList.add('reveal');
+          if (sidebarEl) sidebarEl.classList.add('reveal');
+          if (bgDecoEl) bgDecoEl.classList.add('reveal');
+          if (deco2WrapEl) deco2WrapEl.classList.add('reveal');
         }
-        if (introPlaying) { setTimeout(revealContent, 3250); } else { revealContent(); }
+        if (introPlaying) { setTimeout(revealContent, 3950); } else { revealContent(); }
       } catch (e) {
         var b = document.querySelector('.banner'), p2 = document.querySelector('.paper');
         if (b) b.classList.add('reveal');
@@ -902,6 +1013,17 @@
             p.classList.toggle('marked');
           });
         });
+      } catch (e) {}
+
+      try {
+        var hint = document.getElementById('highlightHint');
+        if (hint && hint.style.display !== 'none') {
+          setTimeout(function () {
+            hint.style.opacity = '0';
+            localStorage.setItem('cit017TipSeen', '1');
+            setTimeout(function () { hint.style.display = 'none'; }, 700);
+          }, 6000);
+        }
       } catch (e) {}
 
       try {
@@ -931,23 +1053,11 @@
 
       try {
         var conceptsToggle = document.getElementById('conceptsToggle');
-        var conceptsPopup = document.getElementById('conceptsPopup');
-        var conceptsBackdrop = document.getElementById('conceptsBackdrop');
-        var conceptsClose = document.getElementById('conceptsClose');
-        function openConcepts() {
-          conceptsPopup.classList.add('open');
-          conceptsBackdrop.classList.add('open');
-        }
-        function closeConcepts() {
-          conceptsPopup.classList.remove('open');
-          conceptsBackdrop.classList.remove('open');
-        }
-        if (conceptsToggle && conceptsPopup && conceptsBackdrop) {
-          conceptsToggle.addEventListener('click', openConcepts);
-          conceptsBackdrop.addEventListener('click', closeConcepts);
-          if (conceptsClose) conceptsClose.addEventListener('click', closeConcepts);
-          document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') closeConcepts();
+        var conceptsPanel = document.getElementById('conceptsPanel');
+        if (conceptsToggle && conceptsPanel) {
+          conceptsToggle.addEventListener('click', function () {
+            conceptsToggle.classList.toggle('open');
+            conceptsPanel.classList.toggle('open');
           });
         }
       } catch (e) {}
@@ -962,17 +1072,26 @@
       } catch (e) {}
 
       try {
+        var mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        if (mobileMenuToggle) {
+          mobileMenuToggle.addEventListener('click', function () {
+            document.documentElement.classList.toggle('mobile-nav-open');
+          });
+        }
+      } catch (e) {}
+
+      try {
         var root = document.documentElement;
         var fontSizeValue = document.getElementById('fontSizeValue');
-        var savedPx = parseInt(localStorage.getItem('cit017FontPx') || '18', 10);
-        savedPx = Math.max(14, Math.min(20, savedPx));
+        var savedPx = parseInt(localStorage.getItem('cit017FontPx') || '20', 10);
+        savedPx = Math.max(16, Math.min(24, savedPx));
         root.style.setProperty('--font-px', savedPx + 'px');
         if (fontSizeValue) fontSizeValue.textContent = savedPx + 'px';
         function currentPx() {
-          return parseInt(getComputedStyle(root).getPropertyValue('--font-px'), 10) || 18;
+          return parseInt(getComputedStyle(root).getPropertyValue('--font-px'), 10) || 20;
         }
         function setPx(v) {
-          v = Math.max(14, Math.min(20, v));
+          v = Math.max(16, Math.min(24, v));
           root.style.setProperty('--font-px', v + 'px');
           localStorage.setItem('cit017FontPx', String(v));
           if (fontSizeValue) fontSizeValue.textContent = v + 'px';
@@ -1000,9 +1119,11 @@
         var rotatePrompt = document.getElementById('rotatePrompt');
         var rotateDismiss = document.getElementById('rotateDismiss');
         function checkOrientation() {
-          var isSmallLandscape = window.matchMedia('(max-height: 480px) and (orientation: landscape), (max-height: 420px), (max-width: 340px)').matches;
+          var isTouch = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window);
+          var isUnusualSize = window.matchMedia('(max-width: 1024px) and (max-height: 640px), (max-width: 560px), (max-height: 460px)').matches;
+          var isUnusual = isUnusualSize && !isTouch;
           var dismissed = sessionStorage.getItem('cit017RotateDismissed');
-          if (isSmallLandscape && !dismissed) rotatePrompt.classList.add('active');
+          if (isUnusual && !dismissed) rotatePrompt.classList.add('active');
           else rotatePrompt.classList.remove('active');
         }
         window.addEventListener('resize', checkOrientation);
@@ -1012,6 +1133,42 @@
           sessionStorage.setItem('cit017RotateDismissed', '1');
           rotatePrompt.classList.remove('active');
         });
+      } catch (e) {}
+
+      try {
+        var shield = document.getElementById('deco2');
+        if (shield && window.matchMedia('(pointer: fine)').matches) {
+          var stops = [[111,191,71],[217,164,65],[192,57,43]];
+          function colorAt(t) {
+            t = Math.max(0, Math.min(1, t));
+            var a, b, lt;
+            if (t < 0.5) { a = stops[0]; b = stops[1]; lt = t / 0.5; }
+            else { a = stops[1]; b = stops[2]; lt = (t - 0.5) / 0.5; }
+            var r = Math.round(a[0] + (b[0] - a[0]) * lt);
+            var g = Math.round(a[1] + (b[1] - a[1]) * lt);
+            var bch = Math.round(a[2] + (b[2] - a[2]) * lt);
+            return 'rgb(' + r + ',' + g + ',' + bch + ')';
+          }
+          var lastX = -9999, lastY = -9999, ticking = false;
+          function updateShieldColor() {
+            ticking = false;
+            var rect = shield.getBoundingClientRect();
+            var cx = rect.left + rect.width / 2;
+            var cy = rect.top + rect.height / 2;
+            var dist = Math.hypot(lastX - cx, lastY - cy);
+            var ACTIVATE_R = 460;
+            if (dist > ACTIVATE_R) {
+              shield.style.color = '';
+            } else {
+              var t = (dist - 90) / (ACTIVATE_R - 90);
+              shield.style.color = colorAt(t);
+            }
+          }
+          document.addEventListener('mousemove', function (e) {
+            lastX = e.clientX; lastY = e.clientY;
+            if (!ticking) { ticking = true; requestAnimationFrame(updateShieldColor); }
+          }, { passive: true });
+        }
       } catch (e) {}
     })();
   </script>
