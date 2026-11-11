@@ -243,9 +243,7 @@
     background: linear-gradient(135deg, transparent 50%, rgba(30,63,43,0.16) 50%);
     border-bottom-right-radius: 10px;
   }
-  .nav-item .n-icon { width: 20px; height: 20px; margin-top: 0.15rem; flex-shrink: 0; color: var(--avocado-deep); transition: transform 0.18s ease, color 0.18s ease; }
   .nav-item:hover { background: #ffffff; box-shadow: 0 10px 20px rgba(30,63,43,0.18); transform: rotate(-1.4deg) translateX(4px); }
-  .nav-item:hover .n-icon { transform: scale(1.15) rotate(-4deg); color: var(--avocado); }
   .nav-item.active {
     background: linear-gradient(135deg, #ffffff, var(--mint-deep));
     border: 2px solid var(--forest);
@@ -253,7 +251,6 @@
     box-shadow: 0 10px 24px rgba(30,63,43,0.2), 0 0 0 3px rgba(111,143,79,0.16);
     padding: 0.85rem 0.9rem 0.95rem;
   }
-  .nav-item.active .n-icon { color: var(--forest); }
   .nav-item .n-title { font-family: 'Segoe Script', 'Bradley Hand', 'Brush Script MT', cursive; font-size: 1.2rem; color: var(--forest-deep); display: block; }
   .nav-item .n-meta { display: block; font-size: 0.82rem; font-weight: 700; color: var(--forest-deep); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin-top: 0.2rem; }
   .n-current { display: none; }
@@ -321,7 +318,6 @@
   html.dark-mode .nav-item { background: #1b3327; border-color: #2a4534; }
   html.dark-mode .nav-item:hover { background: #223d2e; }
   html.dark-mode .nav-item.active { background: linear-gradient(135deg, #1b3327, #24402f); border-color: #8fd1a8; box-shadow: 0 10px 24px rgba(0,0,0,0.35), 0 0 0 3px rgba(143,209,168,0.16); }
-  html.dark-mode .nav-item.active .n-icon { color: #8fd1a8; }
   html.dark-mode .nav-item.active .n-current { color: #8fd1a8; }
   html.dark-mode .current-dot { background: #8fd1a8; }
   html.dark-mode .nav-item .n-title { color: #eef6f0; }
@@ -547,17 +543,25 @@
   @keyframes flashOut { from { opacity: 1; } to { opacity: 0; } }
 
   .page-transition {
-    position: fixed;
-    inset: 0;
-    z-index: 1600;
-    opacity: 0;
-    pointer-events: none;
-    background: linear-gradient(135deg, var(--avocado), var(--forest-deep));
+    position: fixed; inset: 0; z-index: 1600; opacity: 0; pointer-events: none;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem;
+    color: #fdfbf5;
+    background: radial-gradient(circle at 50% 45%, rgba(111,143,79,0.96), rgba(30,63,43,0.98) 66%, #183525);
     transition: opacity 0.32s ease;
   }
-  .page-transition.active { opacity: 1; }
+  .page-transition.active, .page-transition.initial-loading { opacity: 1; }
+  .loader-mark { width: 76px; height: 76px; overflow: visible; animation: loaderWobble 2.8s ease-in-out infinite; }
+  .loader-orbit { transform-origin: 40px 40px; animation: loaderSpin 2.4s linear infinite; }
+  .loader-writing { stroke-dasharray: 18; stroke-dashoffset: 18; animation: loaderWrite 1.45s ease-in-out infinite; }
+  .page-transition:not(.active):not(.initial-loading) .loader-orbit, .page-transition:not(.active):not(.initial-loading) .loader-writing, .page-transition:not(.active):not(.initial-loading) .loader-mark { animation-play-state: paused; }
+  .loader-label { font: 700 0.68rem -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.82; }
+  @keyframes loaderSpin { to { transform: rotate(360deg); } }
+  @keyframes loaderWobble { 0%, 100% { transform: rotate(-1.5deg) translateY(0); } 50% { transform: rotate(1.5deg) translateY(-2px); } }
+  @keyframes loaderWrite { 0%, 12% { stroke-dashoffset: 18; opacity: 0.45; } 58%, 84% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: -18; opacity: 0.45; } }
   @media (prefers-reduced-motion: reduce) {
     .page-transition { transition: none; }
+    .loader-orbit, .loader-writing, .loader-mark { animation: none; }
+    .loader-writing { stroke-dashoffset: 0; }
   }
 
   .flash-tagline {
@@ -788,6 +792,134 @@
     .brand-mark { width: 40px; height: 40px; }
   }
 
+
+  .nav-item {
+    background-color: #fbfaf3;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(72,112,83,0.075) 25px 26px);
+  }
+  .nav-item.active {
+    background-color: #fffdf7;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(72,112,83,0.09) 25px 26px);
+  }
+  html.dark-mode .nav-item, html.dark-mode .nav-item.active {
+    background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(143,199,159,0.08) 25px 26px);
+  }
+
+
+  /* Chapter-note hover and reader guide placement */
+  .nav-item:hover, .nav-item.active:hover {
+    background-color: #fffdf7;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(72,112,83,0.09) 25px 26px);
+    box-shadow: 0 11px 22px rgba(30,63,43,0.19);
+    transform: rotate(-0.7deg) translateX(4px);
+  }
+  .nav-item::before { transition: transform .24s ease, opacity .24s ease; }
+  .nav-item:hover::before { opacity: 1; transform: translateX(-50%) rotate(4deg) translateY(-2px); }
+  .nav-item .n-title { transition: color .2s ease, text-decoration-color .2s ease; }
+  .nav-item:hover .n-title { color: var(--avocado-deep); text-decoration: underline wavy rgba(111,143,79,.55); text-underline-offset: 4px; }
+  html.dark-mode .nav-item:hover, html.dark-mode .nav-item.active:hover {
+    background-color: #223d2e;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(143,199,159,0.11) 25px 26px);
+  }
+  .reading-tag {
+    top: 1rem; left: calc(var(--sidebar-w) + 30px); max-width: min(270px, calc(100vw - var(--sidebar-w) - 54px));
+    padding: .48rem .72rem; border-radius: 10px; border-left: 3px solid var(--avocado);
+    background: rgba(253,251,245,.94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font-size: .78rem; line-height: 1.25; box-shadow: 0 5px 16px rgba(30,63,43,.12);
+    transform: translateX(-8px); transition: opacity .25s ease, transform .25s ease, left .25s ease;
+  }
+  .reading-tag.show { transform: translateX(0); }
+  html.sidebar-collapsed .reading-tag { left: 30px; }
+  html.dark-mode .reading-tag { background: rgba(22,33,26,.94); border-left-color: #8fd1a8; color: #eef6f0; }
+  @media (max-width: 760px) {
+    .reading-tag { top: 1rem; left: 1rem; max-width: calc(100vw - 2rem); font-size: .74rem; }
+    .reading-tag.show { transform: none; }
+  }
+
+
+  /* Hand-drawn notebook details */
+  .brand-mark { color: var(--forest); }
+  .brand:hover .brand-mark { transform: rotate(-3deg) scale(1.06); }
+  .brand:hover .brand-mark path:last-child { stroke: var(--avocado); }
+  .brand { border-bottom: 0; position: relative; }
+  .brand::after, .sidebar-footer::before {
+    content: ""; position: absolute; left: 0; right: 0; height: 2px;
+    background: repeating-linear-gradient(90deg, rgba(79,106,55,.38) 0 7px, transparent 7px 11px);
+  }
+  .brand::after { bottom: 0; }
+  .sidebar-footer { border-top: 0; position: relative; }
+  .sidebar-footer::before { top: 0; }
+  .nav-item { transition: background-color .22s ease, box-shadow .24s ease, transform .24s cubic-bezier(.2,.75,.25,1); }
+  .nav-item:hover, .nav-item.active:hover { transform: translateY(-3px) rotate(-.45deg); }
+  .nav-item .n-title { position: relative; width: fit-content; max-width: 100%; text-decoration: none !important; }
+  .nav-item .n-title::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -.18em; height: 5px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='5' viewBox='0 0 36 5'%3E%3Cpath d='M1 3 Q5 0 9 3 T17 3 T25 3 T35 3' fill='none' stroke='%236f8f4f' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x left center / 36px 5px;
+    transform: scaleX(0); transform-origin: left center; transition: transform .38s cubic-bezier(.2,.8,.2,1);
+  }
+  .nav-item:hover .n-title::after { transform: scaleX(1); }
+  .reading-tools button {
+    background-color: #f8f6ed;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 18px, rgba(72,112,83,.075) 18px 19px);
+    border-color: rgba(111,143,79,.42); border-radius: 7px 7px 9px 7px;
+    box-shadow: 0 2px 0 rgba(79,106,55,.12);
+    transition: background-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .reading-tools button:hover { background-color: #fffdf7; transform: translateY(-2px) rotate(-1deg); box-shadow: 0 4px 0 rgba(79,106,55,.16); }
+  .reading-tools button:active { transform: translateY(1px); box-shadow: none; }
+  .reading-tools button:focus-visible, .nav-item:focus-visible { outline: 2px dashed var(--avocado-deep); outline-offset: 3px; }
+  html.dark-mode .brand::after, html.dark-mode .sidebar-footer::before { background: repeating-linear-gradient(90deg, rgba(143,199,159,.42) 0 7px, transparent 7px 11px); }
+  html.dark-mode .reading-tools button { background-color: #1b3327; background-image: repeating-linear-gradient(to bottom, transparent 0 18px, rgba(143,199,159,.09) 18px 19px); }
+  html.dark-mode .reading-tools button:hover { background-color: #223d2e; }
+
+
+  /* Journal index, hand-drawn marker, and a slower pen stroke */
+  .nav-item { align-items: center; }
+  .nav-item .n-index {
+    width: 24px; flex: 0 0 24px; color: var(--avocado-deep);
+    font: italic 1rem Georgia, "Times New Roman", serif; letter-spacing: -.05em;
+    text-align: center; opacity: .82; transform: rotate(-5deg);
+  }
+  .nav-item:hover .n-index { color: var(--forest); transform: rotate(3deg) translateY(-1px); }
+  .nav-item.active .n-index { color: var(--forest); font-size: 1.08rem; }
+  .nav-item.active {
+    background-color: #fffdf7; background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(72,112,83,.09) 25px 26px);
+    border: 1px solid rgba(79,106,55,.58); border-left: 3px solid var(--avocado);
+    transform: rotate(-.45deg); box-shadow: 0 7px 16px rgba(30,63,43,.13);
+  }
+  .nav-item.active .title-ink {
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    padding: 0 .08em;
+    background-image: linear-gradient(rgba(242,211,91,.42) 0%, rgba(242,211,91,.42) 100%);
+    background-position: left bottom; background-repeat: no-repeat; background-size: 0% 100%;
+    animation: markerSweep .82s cubic-bezier(.2,.65,.25,1) .12s forwards;
+  }
+  @keyframes markerSweep { 0% { background-size: 0% 100%; } 70% { background-size: 104% 100%; } 100% { background-size: 100% 100%; } }
+  .chapter-pen {
+    position: absolute; left: 0; bottom: -8px; width: 14px; height: 14px;
+    fill: #f4e5b0; stroke: var(--forest-deep); stroke-width: 1.2;
+    stroke-linecap: round; stroke-linejoin: round; opacity: 0; pointer-events: none;
+    filter: drop-shadow(0 1px 1px rgba(30,63,43,.18));
+  }
+  .nav-item:hover .chapter-pen { animation: penTrace 1.12s ease-in-out forwards; }
+  @keyframes penTrace {
+    0% { left: 0; opacity: 0; transform: rotate(-42deg) translateY(2px); }
+    8% { opacity: 1; }
+    22% { left: 18%; transform: rotate(-34deg) translateY(-1px); }
+    38% { left: 37%; transform: rotate(-47deg) translateY(1.5px); }
+    55% { left: 57%; transform: rotate(-36deg) translateY(-1px); }
+    73% { left: 76%; transform: rotate(-45deg) translateY(1px); }
+    90% { left: calc(100% - 12px); opacity: 1; transform: rotate(-38deg) translateY(-1px); }
+    100% { left: calc(100% - 12px); opacity: 0; transform: rotate(-44deg) translateY(1px); }
+  }
+  .nav-item .n-title::after { transition: transform .95s cubic-bezier(.2,.65,.25,1); }
+  .nav-item.active .n-current {
+    width: fit-content; padding: .12rem .42rem; border: 1px solid rgba(111,143,79,.22);
+    border-radius: 999px; background: rgba(111,143,79,.08);
+  }
+  html.dark-mode .nav-item.active { background-color: #1b3327; background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(143,199,159,.08) 25px 26px); border-color: #52765d; border-left-color: #8fd1a8; }
+  html.dark-mode .nav-item.active .title-ink { background-image: linear-gradient(rgba(202,179,90,.3) 0%, rgba(202,179,90,.3) 100%); }
+
 </style>
 </head>
 <body class="grain" data-paper="risk">
@@ -895,7 +1027,31 @@
     <div class="intro-hint">click anywhere to open</div>
   </div>
   <div class="flash" id="flash"><div class="flash-tagline">Information Security</div></div>
-  <div class="page-transition" id="pageTransition"></div>
+  <div class="page-transition" id="pageTransition" role="status" aria-live="polite" aria-label="Loading reflection">
+    <svg class="loader-mark" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <circle class="loader-orbit" cx="40" cy="40" r="34" stroke="rgba(253,251,245,.58)" stroke-width="1.5" stroke-dasharray="2 7"/>
+      <path d="M18 24 Q29 19 39 27 Q50 19 62 24 L60 55 Q49 52 39 60 Q29 52 20 56Z" fill="rgba(253,251,245,.1)" stroke="#fdfbf5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M39 27 Q39 41 39 59M24 31 Q31 29 35 33M44 33 Q51 29 57 31M24 38 Q31 36 35 40M44 40 Q51 36 57 38M24 46 Q31 44 35 48M44 48 Q51 44 57 46" stroke="rgba(253,251,245,.62)" stroke-width="1.25" stroke-linecap="round"/>
+      <path class="loader-writing" d="M25 48 Q30 46 35 49" stroke="#fdfbf5" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M61 17l2 4 4 1-4 2-2 4-1-4-4-2 4-1z" fill="#fdfbf5" opacity=".8"/>
+    </svg>
+    <span class="loader-label">Opening reflection</span>
+  </div>
+  <script>
+    (function () {
+      var overlay = document.getElementById('pageTransition');
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!overlay || reduceMotion || !sessionStorage.getItem('cit017IntroSeen')) return;
+      var started = Date.now();
+      overlay.classList.add('initial-loading');
+      function hideLoader() {
+        var remaining = Math.max(0, 650 - (Date.now() - started));
+        setTimeout(function () { overlay.classList.remove('initial-loading'); }, remaining);
+      }
+      if (document.readyState === 'complete') hideLoader();
+      else window.addEventListener('load', hideLoader, { once: true });
+    })();
+  </script>
   <script>
     (function () {
       var intro = document.getElementById('intro');
@@ -954,10 +1110,11 @@
 
   <aside class="sidebar">
     <div class="brand">
-      <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2 L20 6 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V6 Z"/>
-        <circle cx="12" cy="10.5" r="2.1"/>
-        <path d="M12 12.6 V15.5"/>
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3.5 5.3c4.6-1.35 8.15-.45 8.7 3.4v11c-.55-3.75-4.1-4.65-8.7-3.3z"/>
+        <path d="M20.5 5.3c-4.6-1.35-8.15-.45-8.7 3.4v11c.55-3.75 4.1-4.65 8.7-3.3z"/>
+        <path d="M5.8 8.5c1.8-.35 3.15-.08 4.3.65M5.8 11.2c1.7-.3 3.05-.02 4.2.7M18.2 8.5c-1.8-.35-3.15-.08-4.3.65M18.2 11.2c-1.7-.3-3.05-.02-4.2.7"/>
+        <path d="M15.4 16.4l4.7-4.7 1.4 1.4-4.7 4.7-2 .6z"/>
       </svg>
       <div>
         <div class="code">CIT.017</div>
@@ -970,24 +1127,24 @@
 
     <div class="nav-label sans">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12 L15 5 a3 3 0 0 1 4 4 L11 17 a5 5 0 0 1 -7 -7 L12 2"/></svg>
-      Papers
+      Reflection Papers
     </div>
     <nav class="nav-list">
       <a class="nav-item" href="index.html">
-        <svg class="n-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>
-        <span><span class="n-title">Security in Depth</span><span class="n-meta">Reflection 1</span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
+        <span class="n-index" aria-hidden="true">01</span>
+        <span><span class="n-title"><span class="title-ink">Security in Depth</span><svg class="chapter-pen" viewBox="0 0 18 18" aria-hidden="true"><path d="m3 13.8 1.1-3.2L12.8 2l3.2 3.2-8.7 8.7L4 15z"/><path d="m10.9 3.9 3.2 3.2M3 13.8l2.7-.6"/></svg></span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
       </a>
       <a class="nav-item" href="beyond-technology.html">
-        <svg class="n-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M3 21c0-4.4 3.13-8 7-8s7 3.6 7 8"/><path d="M18 8v4"/><circle cx="18" cy="15.2" r="0.9" fill="currentColor" stroke="none"/></svg>
-        <span><span class="n-title">Beyond Technology</span><span class="n-meta">Reflection 2</span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
+        <span class="n-index" aria-hidden="true">02</span>
+        <span><span class="n-title"><span class="title-ink">Beyond Technology</span><svg class="chapter-pen" viewBox="0 0 18 18" aria-hidden="true"><path d="m3 13.8 1.1-3.2L12.8 2l3.2 3.2-8.7 8.7L4 15z"/><path d="m10.9 3.9 3.2 3.2M3 13.8l2.7-.6"/></svg></span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
       </a>
       <a class="nav-item active" href="assessing-risks.html#top">
-        <svg class="n-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v5c0 5 4 8 9 10 5-2 9-5 9-10V7z"/><path d="M12 7v6"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
-        <span><span class="n-title">Assessing Risks</span><span class="n-meta">Reflection 3</span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
+        <span class="n-index" aria-hidden="true">03</span>
+        <span><span class="n-title"><span class="title-ink">Assessing Risks</span><svg class="chapter-pen" viewBox="0 0 18 18" aria-hidden="true"><path d="m3 13.8 1.1-3.2L12.8 2l3.2 3.2-8.7 8.7L4 15z"/><path d="m10.9 3.9 3.2 3.2M3 13.8l2.7-.6"/></svg></span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
       </a>
       <a class="nav-item" href="adzu-nursing-review-audit.html">
-        <svg class="n-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M7.5 10.5h6M10.5 7.5v6"/></svg>
-        <span><span class="n-title">Finding Security Gaps</span><span class="n-meta">Reflection 4</span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
+        <span class="n-index" aria-hidden="true">04</span>
+        <span><span class="n-title"><span class="title-ink">Finding Security Gaps</span><svg class="chapter-pen" viewBox="0 0 18 18" aria-hidden="true"><path d="m3 13.8 1.1-3.2L12.8 2l3.2 3.2-8.7 8.7L4 15z"/><path d="m10.9 3.9 3.2 3.2M3 13.8l2.7-.6"/></svg></span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
       </a>
     </nav>
 
@@ -1090,7 +1247,6 @@
         var pct = scrollable > 0 ? (scrollY / scrollable) * 100 : 0;
         bar.style.width = pct + '%';
         if (deco1) deco1.style.transform = 'translateY(' + (-scrollY * 0.12) + 'px)';
-        if (deco2) { var progress = scrollable > 0 ? Math.max(0, Math.min(1, scrollY / scrollable)) : 0; var stageCount = 3; var stageIndex = current ? Array.prototype.indexOf.call(essayParas, current) : Math.min(stageCount - 1, Math.floor(progress * stageCount)); stageIndex = Math.max(0, Math.min(stageCount - 1, stageIndex)); deco2.setAttribute("data-stage", stageIndex); var travel = Math.max(0, window.innerWidth - 76); deco2.style.transform = "translateX(" + (travel * progress) + "px)"; }
 
         var refY = window.innerHeight * 0.35;
         var current = null;
@@ -1102,19 +1258,19 @@
           if (current) {
             var topic = current.getAttribute('data-topic');
             if (tag.textContent !== topic) tag.textContent = topic;
-            tag.classList.add('show');
           } else {
+            tag.textContent = '';
             tag.classList.remove('show');
           }
         }
       }
-      var iconHideTimer;
+      var readingTagTimer;
       document.addEventListener('scroll', function () {
         updateProgress();
-        if (deco2) {
-          deco2.classList.add('is-visible');
-          clearTimeout(iconHideTimer);
-          iconHideTimer = setTimeout(function () { deco2.classList.remove('is-visible'); }, 700);
+        if (tag && tag.textContent) {
+          tag.classList.add('show');
+          clearTimeout(readingTagTimer);
+          readingTagTimer = setTimeout(function () { tag.classList.remove('show'); }, 5000);
         }
       }, { passive: true });
       window.addEventListener('resize', updateProgress);
