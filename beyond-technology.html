@@ -122,28 +122,6 @@
   .bg-deco { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
   .deco { position: absolute; opacity: 0.1; will-change: transform; }
   .deco-1 { width: 620px; height: 620px; left: -140px; bottom: -160px; color: var(--celadon-deep); }
-  .deco-2 {
-    position: fixed;
-    width: 520px; height: 520px; right: -120px; top: -80px;
-    z-index: 3;
-    color: var(--forest); opacity: 0.13;
-    pointer-events: auto;
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='%23ddc9a0' stroke='%231e3f2b' stroke-width='1.4' stroke-linejoin='round' stroke-linecap='round'%3E%3Crect x='10' y='16' width='14' height='12' rx='5'/%3E%3Cpath d='M8,20 q-3,1 -2,4 q1,3 5,2 l1,-5 z'/%3E%3Crect x='7' y='2' width='6' height='16' rx='3' transform='rotate(-18 10 10)'/%3E%3C/g%3E%3C/svg%3E") 11 4, auto;
-    transition: opacity 0.35s ease;
-  }
-  .deco-2:hover { opacity: 0.55; filter: url(#shieldDistort); }
-  .shield-wrap { transform-box: fill-box; transform-origin: center; transition: transform 0.35s ease; }
-  .deco-2:hover .shield-wrap { transform: rotate(-6deg) scale(1.05); }
-  .deco-2 .shield-label { opacity: 0; font-size: 26px; font-weight: 700; letter-spacing: 4px; fill: currentColor; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; transition: opacity 0.25s ease; }
-  .deco-2:hover .shield-label { opacity: 1; }
-  .shield-ring { animation: ringPulse 4s ease-in-out infinite; }
-  .thread-line { opacity: 0.3; stroke-dasharray: 3 6; animation: threadFlow 1.6s linear infinite; transition: opacity 0.3s ease; }
-  @keyframes threadFlow { to { stroke-dashoffset: -18; } }
-  .deco-2:hover .thread-line { opacity: 0.8; animation-duration: 0.7s; }
-  .threat-node { transform-box: fill-box; transform-origin: center; animation: nodePulse 3.2s ease-in-out infinite; transition: color 0.2s ease; }
-  @keyframes nodePulse { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 0.95; transform: scale(1.06); } }
-  .deco-2:hover .threat-node { animation-duration: 1.6s; }
-  @keyframes ringPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.85; } }
 
   .deco-ripple { transform-box: fill-box; transform-origin: center; animation: ripple 4.5s ease-out infinite; }
   .deco-ripple:nth-child(2) { animation-delay: -1.5s; }
@@ -377,8 +355,7 @@
     z-index: 0;
   }
   .banner.reveal { animation: riseIn 0.6s cubic-bezier(.2,.7,.3,1) both, bannerGradientMove 12s ease-in-out infinite; }
-  .bg-deco.reveal, .deco2-wrap.reveal { animation: riseIn 0.6s cubic-bezier(.2,.7,.3,1) both; }
-  .deco2-wrap { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+  .bg-deco.reveal { animation: riseIn 0.6s cubic-bezier(.2,.7,.3,1) both; }
   .sidebar.reveal { animation: sidebarFadeIn 0.6s ease both; }
   @keyframes sidebarFadeIn { from { opacity: 0; } to { opacity: 1; } }
   .banner:hover { transform: translateY(-3px); box-shadow: 0 18px 36px rgba(30,63,43,0.26), inset 0 1px 0 rgba(255,255,255,0.18); }
@@ -768,6 +745,23 @@
     .paper { padding: 1.75rem 1.2rem 1.75rem; }
     .essay p:first-of-type::first-letter { font-size: 3rem; }
   }
+
+
+
+  /* Sidebar identity and edge control polish */
+  .sidebar-toggle { left: calc(var(--sidebar-w) - 15px); top: 1.45rem; border-color: var(--celadon-deep); box-shadow: 0 3px 9px rgba(30,63,43,0.14); }
+  html.sidebar-collapsed .sidebar-toggle { left: 14px; }
+  .brand { gap: 0.85rem; margin-bottom: 1.9rem; padding: 0.15rem 0.15rem 1.25rem; }
+  .brand-mark { width: 42px; height: 42px; padding: 7px; border: 1px solid rgba(111,143,79,0.24); border-radius: 12px; background: rgba(255,255,255,0.42); }
+  .brand .code { font-size: 1.28rem; font-weight: 600; letter-spacing: -0.025em; }
+  .brand .sub { font-size: 0.64rem; line-height: 1.35; letter-spacing: 0.11em; white-space: nowrap; }
+  html.dark-mode .brand-mark { background: rgba(27,51,39,0.7); border-color: #36563f; }
+  @media (max-width: 760px) {
+    .sidebar-toggle { display: none; }
+    .brand { margin-bottom: 0; padding: 0; }
+    .brand-mark { width: 40px; height: 40px; }
+  }
+
 </style>
 </head>
 <body class="grain">
@@ -921,85 +915,7 @@
       </g>
     </svg>
   </div>
-  <div class="deco2-wrap">
-  <svg class="deco deco-2" id="deco2" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <filter id="shieldDistort" x="-30%" y="-30%" width="160%" height="160%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.045" numOctaves="2" seed="3" result="noise">
-          <animate attributeName="baseFrequency" values="0.012 0.045;0.02 0.06;0.012 0.045" dur="2.2s" repeatCount="indefinite"/>
-        </feTurbulence>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="16"/>
-      </filter>
-    </defs>
-    <g transform="translate(250,260)">
-      <g class="shield-wrap">
-        <g class="shield-ring">
-          <circle class="deco-ripple" r="80" stroke="currentColor" stroke-width="2"/>
-          <circle class="deco-ripple" r="80" stroke="currentColor" stroke-width="2"/>
-          <circle class="deco-ripple" r="80" stroke="currentColor" stroke-width="2"/>
-        </g>
-
-        <g class="thread-lines" stroke="currentColor" stroke-width="1.4">
-          <line class="thread-line" x1="0" y1="-30" x2="150" y2="-115" style="animation-delay:0s"/>
-          <line class="thread-line" x1="0" y1="-30" x2="170" y2="60" style="animation-delay:0.3s"/>
-          <line class="thread-line" x1="0" y1="-30" x2="-160" y2="70" style="animation-delay:0.6s"/>
-          <line class="thread-line" x1="0" y1="-30" x2="-140" y2="-100" style="animation-delay:0.9s"/>
-        </g>
-
-        <path d="M-30,-45 C-24,-64 24,-64 30,-45 C25,-56 -25,-56 -30,-45 Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
-        <ellipse cx="0" cy="-30" rx="32" ry="34" stroke="currentColor" stroke-width="3"/>
-        <path d="M-32,-28 C-39,-27 -39,-15 -32,-15" stroke="currentColor" stroke-width="2"/>
-        <path d="M32,-28 C39,-27 39,-15 32,-15" stroke="currentColor" stroke-width="2"/>
-        <path d="M-19,-38 Q-12,-42 -5,-38" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M5,-38 Q12,-42 19,-38" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        <circle cx="-12" cy="-30" r="2.4" fill="currentColor" stroke="none"/>
-        <circle cx="12" cy="-30" r="2.4" fill="currentColor" stroke="none"/>
-        <path d="M0,-26 L-3,-16 Q0,-13 3,-16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M-10,-6 Q0,0 10,-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M-12,4 L-12,20 L12,20 L12,4" stroke="currentColor" stroke-width="3"/>
-        <path d="M-12,20 C-45,24 -60,45 -55,70 L55,70 C60,45 45,24 12,20" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-
-        <g transform="translate(150,-115)">
-          <g class="threat-node" style="animation-delay:0s">
-            <circle r="26" stroke="currentColor" stroke-width="2"/>
-            <rect x="-13" y="-8" width="26" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M-13,-8 L0,3 L13,-8" stroke="currentColor" stroke-width="1.8"/>
-          </g>
-        </g>
-
-        <g transform="translate(170,60)">
-          <g class="threat-node" style="animation-delay:0.5s">
-            <circle r="26" stroke="currentColor" stroke-width="2"/>
-            <rect x="-7" y="-13" width="14" height="26" rx="4" stroke="currentColor" stroke-width="1.8"/>
-            <line x1="-7" y1="-7" x2="7" y2="-7" stroke="currentColor" stroke-width="1.4"/>
-            <line x1="-7" y1="8" x2="7" y2="8" stroke="currentColor" stroke-width="1.4"/>
-          </g>
-        </g>
-
-        <g transform="translate(-160,70)">
-          <g class="threat-node" style="animation-delay:1s">
-            <circle r="26" stroke="currentColor" stroke-width="2"/>
-            <rect x="-13" y="-9" width="26" height="17" rx="7" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M-4,8 L-8,15 L2,8 Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-          </g>
-        </g>
-
-        <g transform="translate(-140,-100)">
-          <g class="threat-node" style="animation-delay:1.5s">
-            <circle r="26" stroke="currentColor" stroke-width="2"/>
-            <path d="M0,-13 L13,11 L-13,11 Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            <line x1="0" y1="-4" x2="0" y2="3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <circle cx="0" cy="7" r="1.3" fill="currentColor" stroke="none"/>
-          </g>
-        </g>
-
-        <text class="shield-label" x="0" y="130" text-anchor="middle">AT RISK</text>
-      </g>
-    </g>
-  </svg>
-  </div>
-
-  <aside class="sidebar">
+<aside class="sidebar">
     <div class="brand">
       <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 2 L20 6 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V6 Z"/>
@@ -1022,23 +938,20 @@
     <nav class="nav-list">
       <a class="nav-item" href="index.html">
         <svg class="n-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>
-        <span>
-          <span class="n-title">Security in Depth</span>
-          <span class="n-meta">Reflection 1</span>
-          <span class="n-current"><span class="current-dot"></span>Currently reading</span>
-        </span>
+        <span><span class="n-title">Security in Depth</span><span class="n-meta">Reflection 1</span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
       </a>
       <a class="nav-item active" href="beyond-technology.html#top">
         <svg class="n-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M3 21c0-4.4 3.13-8 7-8s7 3.6 7 8"/><path d="M18 8v4"/><circle cx="18" cy="15.2" r="0.9" fill="currentColor" stroke="none"/></svg>
-        <span>
-          <span class="n-title">Beyond Technology</span>
-          <span class="n-meta">Reflection 2</span>
-          <span class="n-current"><span class="current-dot"></span>Currently reading</span>
-        </span>
+        <span><span class="n-title">Beyond Technology</span><span class="n-meta">Reflection 2</span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
       </a>
-      <div class="nav-soon">
-        <span class="soon-dot"></span> More papers coming soon
-      </div>
+      <a class="nav-item" href="assessing-risks.html">
+        <svg class="n-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v5c0 5 4 8 9 10 5-2 9-5 9-10V7z"/><path d="M12 7v6"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+        <span><span class="n-title">Assessing Risks</span><span class="n-meta">Reflection 3</span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
+      </a>
+      <a class="nav-item" href="adzu-nursing-review-audit.html">
+        <svg class="n-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M7.5 10.5h6M10.5 7.5v6"/></svg>
+        <span><span class="n-title">Finding Security Gaps</span><span class="n-meta">Reflection 4</span><span class="n-current"><span class="current-dot"></span>Currently reading</span></span>
+      </a>
     </nav>
 
     <div class="sidebar-footer">
@@ -1129,10 +1042,6 @@
 
         <p class="signature">— D.J. De Jesus</p>
 
-        <div class="easter-egg" id="easterEgg">
-          <span class="egg-emoji">🎉</span>
-          <p>Still scrolling? Thanks for actually reading it all. Full transparency: every idea, decision, and creative direction here is mine — AI did play a real part in helping implement, refine, and polish the code that brings all this page to life.</p>
-        </div>
       </article>
     </div>
   </main>
@@ -1141,7 +1050,6 @@
     (function () {
       var bar = document.getElementById('progressBar');
       var deco1 = document.getElementById('deco1');
-      var deco2 = document.getElementById('deco2');
       var tag = document.getElementById('readingTag');
       var essayParas = document.querySelectorAll('.essay p[data-topic]');
 
@@ -1152,7 +1060,6 @@
         var pct = scrollable > 0 ? (scrollY / scrollable) * 100 : 0;
         bar.style.width = pct + '%';
         if (deco1) deco1.style.transform = 'translateY(' + (-scrollY * 0.12) + 'px)';
-        if (deco2) deco2.style.transform = 'translateY(' + (scrollY * 0.08) + 'px) rotate(' + (scrollY * 0.012) + 'deg)';
 
         var refY = window.innerHeight * 0.35;
         var current = null;
@@ -1200,13 +1107,11 @@
         var paperEl = document.querySelector('.paper');
         var sidebarEl = document.querySelector('.sidebar');
         var bgDecoEl = document.querySelector('.bg-deco');
-        var deco2WrapEl = document.querySelector('.deco2-wrap');
         function revealContent() {
           if (bannerEl) bannerEl.classList.add('reveal');
           if (paperEl) paperEl.classList.add('reveal');
           if (sidebarEl) sidebarEl.classList.add('reveal');
           if (bgDecoEl) bgDecoEl.classList.add('reveal');
-          if (deco2WrapEl) deco2WrapEl.classList.add('reveal');
         }
         if (introPlaying) { setTimeout(revealContent, 4100); } else { revealContent(); }
       } catch (e) {
@@ -1234,19 +1139,6 @@
         }
       } catch (e) {}
 
-      try {
-        var egg = document.getElementById('easterEgg');
-        if (egg && 'IntersectionObserver' in window) {
-          var eggObs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) { egg.classList.add('show'); eggObs.unobserve(egg); }
-            });
-          }, { threshold: 0.4 });
-          eggObs.observe(egg);
-        } else if (egg) {
-          egg.classList.add('show');
-        }
-      } catch (e) {}
 
       try {
         var profileToggle = document.getElementById('profileToggle');
@@ -1343,43 +1235,7 @@
         });
       } catch (e) {}
 
-      try {
-        var threatNodes = document.querySelectorAll('.threat-node');
-        if (threatNodes.length && window.matchMedia('(pointer: fine)').matches) {
-          var stops = [[111,191,71],[217,164,65],[192,57,43]];
-          function colorAt(t) {
-            t = Math.max(0, Math.min(1, t));
-            var a, b, lt;
-            if (t < 0.5) { a = stops[0]; b = stops[1]; lt = t / 0.5; }
-            else { a = stops[1]; b = stops[2]; lt = (t - 0.5) / 0.5; }
-            var r = Math.round(a[0] + (b[0] - a[0]) * lt);
-            var g = Math.round(a[1] + (b[1] - a[1]) * lt);
-            var bch = Math.round(a[2] + (b[2] - a[2]) * lt);
-            return 'rgb(' + r + ',' + g + ',' + bch + ')';
-          }
-          var lastX = -9999, lastY = -9999, ticking = false;
-          function updateNodeColors() {
-            ticking = false;
-            threatNodes.forEach(function (node) {
-              var rect = node.getBoundingClientRect();
-              var cx = rect.left + rect.width / 2;
-              var cy = rect.top + rect.height / 2;
-              var dist = Math.hypot(lastX - cx, lastY - cy);
-              var ACTIVATE_R = 220;
-              if (dist > ACTIVATE_R) {
-                node.style.color = '';
-              } else {
-                var t = 1 - dist / ACTIVATE_R;
-                node.style.color = colorAt(t);
-              }
-            });
-          }
-          document.addEventListener('mousemove', function (e) {
-            lastX = e.clientX; lastY = e.clientY;
-            if (!ticking) { ticking = true; requestAnimationFrame(updateNodeColors); }
-          }, { passive: true });
-        }
-      } catch (e) {}
+
 
       try {
         var pageTransition = document.getElementById('pageTransition');
